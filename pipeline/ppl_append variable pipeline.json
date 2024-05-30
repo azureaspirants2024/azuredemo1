@@ -1,0 +1,83 @@
+{
+	"name": "ppl_append variable pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "test1",
+					"value": [
+						1,
+						2,
+						3
+					]
+				}
+			},
+			{
+				"name": "Append variable1",
+				"type": "AppendVariable",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "test1",
+					"value": "[4]"
+				}
+			},
+			{
+				"name": "Set variable2",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Append variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "test4",
+					"value": {
+						"value": "@variables('test1')",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"test1": {
+				"type": "Array"
+			},
+			"test2": {
+				"type": "String"
+			},
+			"test3": {
+				"type": "String"
+			},
+			"test4": {
+				"type": "Array"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-05-14T05:34:14Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

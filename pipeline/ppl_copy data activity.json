@@ -1,0 +1,107 @@
+{
+	"name": "ppl_copy data activity",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data from source to dest",
+				"description": "",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Waitfor10sec",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "source//input.txt.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "destination//"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "BinaryReadSettings"
+						}
+					},
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_input",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_output",
+						"type": "DatasetReference",
+						"parameters": {
+							"foldername": {
+								"value": "@variables('testname')",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "Waitfor10sec",
+				"type": "Wait",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 10
+				}
+			},
+			{
+				"name": "Waitfor5sec",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "Copy data from source to dest",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 5
+				}
+			}
+		],
+		"variables": {
+			"testname": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-05-16T05:56:22Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

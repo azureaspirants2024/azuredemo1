@@ -1,0 +1,42 @@
+{
+	"name": "main_pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute child pipeline from main ppl",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "child_pipeline",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Wait5",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "Execute child pipeline from main ppl",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 5
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2024-05-15T04:19:55Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,9 @@
+{
+	"name": "Adf-hav-dev",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "1297656a-ad7e-436b-b641-904d12cfb5f9",
+		"tenantId": "383ec48a-8330-490e-834e-dbbcb85592f3"
+	}
+}

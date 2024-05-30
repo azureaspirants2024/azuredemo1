@@ -1,0 +1,27 @@
+{
+	"name": "st_inputfolder",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_hav_dev",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"foldername": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": {
+					"value": "@dataset().foldername",
+					"type": "Expression"
+				},
+				"container": "source"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
